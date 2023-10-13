@@ -81,7 +81,7 @@ for w in wse_evaluations:
     follow_on = prompt.handle_response(response[0].content)
     while follow_on is not None:
         follow_on_response = d_model.speak(follow_on.content)
-        follow_on = follow_on.handle_response(response[0].content)
+        follow_on = follow_on.handle_response(follow_on_response[0].content)
     end = time.time()
 
     database.add_wsd_discussion(

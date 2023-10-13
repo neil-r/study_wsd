@@ -69,7 +69,7 @@ class DatabaseSqlLite:
         with sqlite3.connect(self.db_file_path) as c:
 
             o = c.execute("SELECT * FROM wsd_results WHERE evaluation_id = ? AND prompt_strategy = ?", (
-                convert_to_id(wse.to_json()),
+                convert_to_id(json.dumps(wse.to_json(), sort_keys=True)),
                 prompt_strategy
             )).fetchone()
 
