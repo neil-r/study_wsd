@@ -16,7 +16,7 @@ The un-centrized development of written language often result in ambiguties in t
 
 
 
-## Question 2: What is the capability of LLMs to accurately identify a new sense of a word?
+## Question 2: What is the capability of LLMs to accurately identify a sense of a word that is not implied?
 
 This question investigates the ability of LLMs to internalize defintiions of words through their training and identify when a prompt fails to identify the true defintiion.
 
