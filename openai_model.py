@@ -13,7 +13,7 @@ class OpenAiDiscussionStrategyFactory:
 
 class OpenAiDiscussionStrategy:
 
-    def __init__(self, model):
+    def __init__(self, model:str):
         self.discussion = discussion.Discussion()
         self.model = model
 

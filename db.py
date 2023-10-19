@@ -50,7 +50,7 @@ class DatabaseSqlLite:
             wse_str = json.dumps(wse_content, sort_keys=True)
 
             cur.execute("INSERT INTO wsd_results VALUES (?,?,?,?,?,?,?,?);",(
-                convert_to_id(wse_content),
+                convert_to_id(wse_str),
                 wse_str,
                 json.dumps(log),
                 discussion_duration,

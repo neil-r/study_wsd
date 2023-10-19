@@ -1,6 +1,6 @@
 import typing
 
-from prompt import DialogStrategy, Prompt
+from prompt import PromptFactory, Prompt
 from wse import WordSenseEvaluation
 
 
@@ -15,7 +15,7 @@ def find_letter_response(response:str) -> typing.Optional[str]:
     return l_response
 
 
-class DefaultWsePrompt(DialogStrategy[WordSenseEvaluation]):
+class DefaultWsePrompt(PromptFactory[WordSenseEvaluation]):
 
     def __init__(self,
                  topic:WordSenseEvaluation,
@@ -57,7 +57,7 @@ Options:
         return None
 
 
-class DefaultWsePromptFactory(DialogStrategy[WordSenseEvaluation]):
+class DefaultWsePromptFactory(PromptFactory[WordSenseEvaluation]):
 
     def generate_prompt(self, topic:WordSenseEvaluation) -> Prompt[WordSenseEvaluation]:
         return DefaultWsePrompt(topic)

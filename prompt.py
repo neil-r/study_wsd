@@ -14,7 +14,7 @@ class Prompt(typing.Generic[Topic]):
         return None
 
 
-class DialogStrategy(typing.Generic[Topic]):
+class PromptFactory(typing.Generic[Topic]):
 
     def generate_prompt(self, topic:Topic) -> Prompt[Topic]:
         raise NotImplementedError("Abstract class, not implemented")
