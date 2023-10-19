@@ -13,7 +13,7 @@ def convert_to_id(json_content):
 class DatabaseSqlLite:
 
 
-    def __init__(self, db_file_path = "db.sql"):
+    def __init__(self, db_file_path = "data.db"):
         self.db_file_path = db_file_path
 
         with sqlite3.connect(self.db_file_path) as c:

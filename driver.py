@@ -8,8 +8,6 @@ import db
 import testing_model
 import time
 
-# Download SemCor dataset if not already downloaded
-#nltk.download('semcor')
 
 # Prepare the creator of the prompts
 prompt_factory = wse_prompts.DefaultWsePromptFactory()
