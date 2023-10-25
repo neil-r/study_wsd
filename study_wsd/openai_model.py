@@ -1,8 +1,8 @@
 import openai
-import discussion
+import study_wsd.discussion as discussion
 
 
-class OpenAiDiscussionStrategyFactory:
+class OpenAiDiscussionStrategyFactory(discussion.DiscussionStrategyFactory):
 
     def __init__(self, model):
         self.model = model

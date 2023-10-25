@@ -1,4 +1,4 @@
-import discussion
+import study_wsd.discussion as discussion
 
 
 class SimpleDiscussionStrategyFactory:

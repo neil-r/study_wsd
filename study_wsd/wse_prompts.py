@@ -1,7 +1,7 @@
 import typing
 
-from prompt import PromptFactory, Prompt
-from wse import WordSenseEvaluation
+from study_wsd.prompt import PromptFactory, Prompt
+from study_wsd.wse import WordSenseEvaluation
 
 
 def find_letter_response(response:str) -> typing.Optional[str]:

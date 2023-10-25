@@ -2,6 +2,13 @@
 
 The un-centrized development of written language often result in ambiguties in the words used to represent things and concepts. This results in the need by readers of written langauge to leverage context to resolve ambiguties, i.e., word sense disambigutation (WSD). In this experiment, we evalute the capability of LLMs to perform WSD. The experiment looks into a number of different aspects of WSD. Each question below forms a foundation for each aspect. To explore each question, assumptions and the setup of a sub-experiment is listed.  The experiment considers two or more LLMs: something like OpenAI GPT 3.5, OpenAI GPT 4.0, PALM, and LLAMA. 
 
+## Datasets
+
+Download and extract the datasets containing SemEval from here: https://sapienzanlp.github.io/xl-wsd/
+
+WordNet and SemCor can be downloaded by running load_data.py
+
+
 ## Question 1: What is the capability of LLMs to accurately identify the sense of a word?
 
 ### Assumptions and Setup

@@ -1,5 +1,5 @@
 import typing
-import prompt
+import study_wsd.prompt as prompt
 
 class WordSenseEvaluation:
 
