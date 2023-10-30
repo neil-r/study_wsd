@@ -6,7 +6,13 @@ import study_wsd.db as db
 import study_wsd.testing_model as testing_model
 from study_wsd.conduct_evaluations import conduct_evaluations
 import study_wsd.semcor as semcor
+from study_wsd import babelnet_api
 
+import dotenv
+
+
+# Load environment variables from local ".env" file
+dotenv.load_dotenv()
 
 # Prepare the creator of the prompts
 prompt_factory = wse_prompts.DefaultWsePromptFactory()
