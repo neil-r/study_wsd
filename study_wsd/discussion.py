@@ -26,3 +26,7 @@ class DiscussionStrategyFactory:
 
     def create(self) -> DiscussionStrategy:
         raise NotImplementedError("Abstract class, implement")
+    
+    @property
+    def model_id(self) -> str:
+        raise NotImplementedError("Abstract class, implement")

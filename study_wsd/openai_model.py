@@ -10,6 +10,10 @@ class OpenAiDiscussionStrategyFactory(discussion.DiscussionStrategyFactory):
     def create(self):
         return OpenAiDiscussionStrategy(self.model)
 
+    @property
+    def model_id(self):
+        return f"open-ai-{self.model}"
+
 
 class OpenAiDiscussionStrategy:
 

@@ -19,7 +19,8 @@ def conduct_evaluations(
       # first check to ensure not already in database
       if database.has_wsd_discussion(
           w,
-          prompt_strategy_name
+          prompt_strategy_name,
+          model_id=discussion_model_factory.model_id
       ):
           print("Skipping evalution since it is already in database")
           continue
@@ -40,6 +41,7 @@ def conduct_evaluations(
           w,
           log=d_model.discussion.to_json(),
           prompt_strategy=prompt_strategy_name,
+          model_id=discussion_model_factory.model_id,
           answer_value=prompt.answer_value,
           discussion_duration=end-start,
           answer_response=prompt.answer_response,

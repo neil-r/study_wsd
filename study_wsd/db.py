@@ -3,8 +3,7 @@ import typing
 import json
 import hashlib
 
-def convert_to_id(json_content):
-    wse_str = json.dumps(json_content, sort_keys=True)
+def convert_to_id(wse_str):
     id =  hashlib.sha256(wse_str.encode("utf-8")).hexdigest()
     return id
 
@@ -25,10 +24,11 @@ class DatabaseSqlLite:
                 log TEXT NOT NULL,
                 discussion_duration REAL NOT NULL,
                 prompt_strategy TEXT NOT NULL,
+                model_id TEXT NOT NULL,
                 answer_value TEXT NOT NULL,
                 answer_response TEXT,
                 correct INTEGER NOT NULL,
-                PRIMARY KEY (evaluation_id, prompt_strategy));
+                PRIMARY KEY (evaluation_id, prompt_strategy, model_id));
             """)
 
             c.commit()
@@ -38,6 +38,7 @@ class DatabaseSqlLite:
         wse,
         log,
         prompt_strategy:str,
+        model_id:str,
         answer_value:str,
         discussion_duration:float,
         answer_response:typing.Optional[str]=None,
@@ -49,12 +50,13 @@ class DatabaseSqlLite:
             wse_content = wse.to_json()
             wse_str = json.dumps(wse_content, sort_keys=True)
 
-            cur.execute("INSERT INTO wsd_results VALUES (?,?,?,?,?,?,?,?);",(
+            cur.execute("INSERT INTO wsd_results VALUES (?,?,?,?,?,?,?,?,?);",(
                 convert_to_id(wse_str),
                 wse_str,
                 json.dumps(log),
                 discussion_duration,
                 prompt_strategy,
+                model_id,
                 answer_value,
                 answer_response,
                 1 if correct else 0
@@ -64,13 +66,16 @@ class DatabaseSqlLite:
 
     def has_wsd_discussion(self,
         wse,
-        prompt_strategy
+        prompt_strategy,
+        model_id
     ):
         with sqlite3.connect(self.db_file_path) as c:
 
-            o = c.execute("SELECT * FROM wsd_results WHERE evaluation_id = ? AND prompt_strategy = ?", (
+            o = c.execute(
+                "SELECT * FROM wsd_results WHERE evaluation_id = ? AND prompt_strategy = ? AND model_id = ?", (
                 convert_to_id(json.dumps(wse.to_json(), sort_keys=True)),
-                prompt_strategy
+                prompt_strategy,
+                model_id
             )).fetchone()
 
             return o is not None

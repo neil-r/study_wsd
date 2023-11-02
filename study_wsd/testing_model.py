@@ -7,6 +7,10 @@ class SimpleDiscussionStrategyFactory:
         pass
     def create(self):
         return SimpleDiscussionStrategy()
+    
+    @property
+    def model_id(self):
+        return "simpleA"
 
 
 class SimpleDiscussionStrategy:
