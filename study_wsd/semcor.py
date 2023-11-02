@@ -38,22 +38,23 @@ def get_semcor_wsd_evaluations():
               # print(lemma)
               word, _ = lemma._key.split("%")
               # lookup all the senses for a word from wordnet
-              synset_options = wn.synsets(word, pos=wn.NOUN)
+              synset_options = []
+              added_map = {}
+              for wn_synset in wn.synsets(word, pos=wn.NOUN):
+                if wn_synset._name not in added_map:
+                    synset_options.append(wse.SynsetOption(wn_synset._name, wn_synset._definition))
+                    added_map[wn_synset._name] = True
+                else:
+                   1+2 # why here?!
+                if wn_synset._name == synset._name:
+                   assert wn_synset._offset == synset._offset
+                      
               
-              '''
-              for a_synset in synset_options:
-                  definition = a_synset._definition
-                  if synset._offset == a_synset._offset:
-                      # at least one should match the annotated word in the sentence
-                      print(f"SAME: {a_synset}")
-                  else:
-                      print(f"DIF: {a_synset}")
-              '''
               if synset_options is None or len(synset_options) <= 1:
                   print(f"Skipping word {word} since it only has one synset.")
                   continue
               
               wse_evaluations.append(wse.WordSenseEvaluation(
-                  regular_sentence, word, synset, synset_options
+                  regular_sentence, word, synset._name, synset_options
               ))
   return wse_evaluations

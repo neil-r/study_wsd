@@ -30,11 +30,11 @@ class DefaultWsePrompt(PromptFactory[WordSenseEvaluation]):
     def content(self) -> str:
         letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q']
         options = [
-            f"{letter}) {t._definition}" for letter, t in zip(letters, self.topic.synset_options)
+            f"{letter}) {t.gloss}" for letter, t in zip(letters, self.topic.synset_options)
         ]
 
         for letter, t in zip(letters, self.topic.synset_options):
-            if self.topic.synset_answer._name == t._name:
+            if self.topic.synset_answer == t.id:
                 self.answer_value = letter
                 break
             
