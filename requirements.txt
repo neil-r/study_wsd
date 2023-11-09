@@ -3,3 +3,5 @@ openai
 pandas
 python-dotenv
 requests
+transformers[torch]
+sentencepiece

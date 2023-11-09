@@ -7,6 +7,7 @@ import study_wsd.testing_model as testing_model
 from study_wsd.conduct_evaluations import conduct_evaluations
 import study_wsd.semcor as semcor
 from study_wsd import babelnet_api
+from study_wsd import huggingface_torch
 
 import dotenv
 
@@ -18,7 +19,8 @@ dotenv.load_dotenv()
 prompt_factory = wse_prompts.DefaultWsePromptFactory()
 
 # Prepare the model that reads and responds to the prompt
-discussion_model_factory = testing_model.SimpleDiscussionStrategyFactory()
+#discussion_model_factory = testing_model.SimpleDiscussionStrategyFactory()
+discussion_model_factory = huggingface_torch.HuggingFaceT5DiscussionStrategyFactory()
 
 # Prepare the database that will store the discussion results
 database = db.DatabaseSqlLite()
