@@ -3,5 +3,11 @@ openai
 pandas
 python-dotenv
 requests
-transformers[torch]
 sentencepiece
+transformers
+auto-gptq
+google-generativeai
+optimum
+accelerate
+torch
+einops
