@@ -33,7 +33,7 @@ def _ensure_cache_folder_created(cache_folder:str):
 def _get_json_response(complete_url:str, cache_folder:str):
     global _session
     # check cache
-    file_name = "".join([c for c in complete_url if c.isalpha() or c.isdigit() or c==' ']).rstrip()
+    file_name = "".join([c for c in complete_url if c.isalpha() or c.isdigit() or c==' ' or c == "-"]).rstrip()
     file_path = _get_cache_path(os.path.join(cache_folder,f"{file_name}.json"))
     if os.path.exists(file_path):
         print("reading from cache!")
