@@ -28,7 +28,10 @@ class DefaultWsePrompt(PromptFactory[WordSenseEvaluation]):
 
     @property
     def content(self) -> str:
-        letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q']
+        letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+
+        if len(self.topic.synset_options) > len(letters):
+            raise ValueError("Not enough letters to support this prompt") 
         options = [
             f"{letter}) {t.gloss}" for letter, t in zip(letters, self.topic.synset_options)
         ]

@@ -18,13 +18,13 @@ dotenv.load_dotenv()
 prompt_factory = wse_prompts.DefaultWsePromptFactory()
 
 # Prepare the model that reads and responds to the prompt
-# discussion_model_factory = testing_model.SimpleDiscussionStrategyFactory()
-# t5_discussion_model_factory = t5_model.T5DiscussionStrategyFactory() 
-# guanaco_discussion_model_factory = guanaco_7B_model.GuanacoDiscussionStrategyFactory()
-# vicuna_discussion_model_factory = vicuna_7B_model.VicunaDiscussionStrategyFactory()
-# palm_discussion_model_factory = palm_model.PalmDiscussionStrategyFactory()
-# llama2_13B_discussion_model_factory = llama2_13B_model.Llama2_13BDiscussionStrategyFactory()
-llama2_7B_discussion_model_factory = llama2_7B_model.Llama2_7BDiscussionStrategyFactory()
+discussion_model_factory = testing_model.SimpleDiscussionStrategyFactory()
+# discussion_model_factory = t5_model.T5DiscussionStrategyFactory() 
+# discussion_model_factory = guanaco_7B_model.GuanacoDiscussionStrategyFactory()
+# discussion_model_factory = vicuna_7B_model.VicunaDiscussionStrategyFactory()
+# discussion_model_factory = palm_model.PalmDiscussionStrategyFactory()
+# discussion_model_factory = llama2_13B_model.Llama2_13BDiscussionStrategyFactory()
+# discussion_model_factory = llama2_7B_model.Llama2_7BDiscussionStrategyFactory()
 
 # Prepare the database that will store the discussion results
 database = db.DatabaseSqlLite()
@@ -34,4 +34,4 @@ wse_evaluations:typing.List[wse.WordSenseEvaluation] = semcor.get_semcor_wsd_eva
 
 print(f"The number of word sense evaluations is {len(wse_evaluations)}")
 
-conduct_evaluations(wse_evaluations, prompt_factory, database, llama2_7B_discussion_model_factory)
+conduct_evaluations(wse_evaluations, prompt_factory, database, discussion_model_factory)
