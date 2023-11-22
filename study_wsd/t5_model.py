@@ -2,7 +2,7 @@ import study_wsd.discussion as discussion
 from transformers import T5Tokenizer, T5ForConditionalGeneration
 
 
-class HuggingFaceT5DiscussionStrategyFactory:
+class T5DiscussionStrategyFactory:
 
     def __init__(self,t5_name="t5-small"):
         self.tokenizer = T5Tokenizer.from_pretrained(t5_name)
@@ -11,14 +11,14 @@ class HuggingFaceT5DiscussionStrategyFactory:
         pass
 
     def create(self):
-        return HuggingFaceT5DiscussionStrategy(self.model,self.tokenizer)
+        return T5DiscussionStrategy(self.model,self.tokenizer)
     
     @property
     def model_id(self):
         return f"huggingface-{self.t5_name}"
 
 
-class HuggingFaceT5DiscussionStrategy:
+class T5DiscussionStrategy:
 
     def __init__(self, model, tokenizer):
         self.discussion = discussion.Discussion()
@@ -32,7 +32,6 @@ class HuggingFaceT5DiscussionStrategy:
         self.discussion.messages.append(discussion.Message(role,content))
 
         # Creating a simple response that always picks A
-
         input_ids = self.tokenizer(f"{content}", return_tensors="pt").input_ids
         outputs = self.model.generate(input_ids)
         response_content = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
