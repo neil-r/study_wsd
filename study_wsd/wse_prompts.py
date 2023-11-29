@@ -60,7 +60,13 @@ Options:
         return None
 
 
-class DefaultWsePrompt2(PromptFactory[WordSenseEvaluation]):
+class DefaultWsePromptFactory(PromptFactory[WordSenseEvaluation]):
+
+    def generate_prompt(self, topic:WordSenseEvaluation) -> Prompt[WordSenseEvaluation]:
+        return DefaultWsePrompt(topic)
+
+
+class DirectWsePrompt(PromptFactory[WordSenseEvaluation]):
 
     def __init__(self,
                  topic:WordSenseEvaluation,
@@ -106,7 +112,7 @@ Options:
         return None
 
 
-class DefaultWsePromptFactory(PromptFactory[WordSenseEvaluation]):
+class DirectWsePromptFactory(PromptFactory[WordSenseEvaluation]):
 
     def generate_prompt(self, topic:WordSenseEvaluation) -> Prompt[WordSenseEvaluation]:
-        return DefaultWsePrompt(topic)
+        return DirectWsePrompt(topic)

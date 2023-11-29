@@ -14,10 +14,13 @@ from study_wsd import t5_model, llama2_7B_model, llama2_13B_model, guanaco_7B_mo
 # Load environment variables from local ".env" file
 dotenv.load_dotenv()
 
-# Prepare the creator of the prompts
-prompt_factory = wse_prompts.DefaultWsePromptFactory()
+# Prepare the creator(s) of the prompts
+p_factories = [
+  wse_prompts.DefaultWsePromptFactory(),
+  # wse_prompts.DirectWsePromptFactory(),
+]
 
-# Prepare the model that reads and responds to the prompt
+# Prepare the model(s) that reads and responds to the prompt
 dm_factories = [
   # testing_model.SimpleDiscussionStrategyFactory(),
   # t5_model.T5DiscussionStrategyFactory(),
@@ -48,6 +51,7 @@ for dataset_file_path in datasets:
 
   print(f"The number of word synset evaluations is {len(wse_evaluations)}")
 
-  for discussion_model_factory in dm_factories:
-    # conduct_evaluations(wse_evaluations[:100], prompt_factory, database, discussion_model_factory)
-    pass
+  for prompt_factory in p_factories:
+    for discussion_model_factory in dm_factories:
+      # conduct_evaluations(wse_evaluations[:100], prompt_factory, database, discussion_model_factory)
+      pass
