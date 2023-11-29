@@ -165,3 +165,9 @@ data.db
 
 WSD_Evaluation_Framework
 xl-wsd-data
+BabelNet-5.2
+
+.vscode
+
+# BabelNet Python RPC library requires python 3.8 :(
+.venv38

@@ -35,7 +35,7 @@ class OpenAiDiscussionStrategy:
         response_msg = discussion.Message(
             role=response.choices[0].message.role,
             content=response.choices[0].message.content,
-        )        
+        )
         self.discussion.messages.append(response_msg)
 
 

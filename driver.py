@@ -6,9 +6,9 @@ import study_wsd.wse_prompts as wse_prompts
 import study_wsd.db as db
 import study_wsd.testing_model as testing_model
 from study_wsd.conduct_evaluations import conduct_evaluations
-import study_wsd.semcor as semcor
-from study_wsd import babelnet_api
-from study_wsd import t5_model, llama2_7B_model, llama2_13B_model, guanaco_7B_model, palm_model, vicuna_7B_model
+import study_wsd.datasets.semcor as semcor
+from study_wsd.datasets import babelnet_api
+from study_wsd import t5_model, llama2_7B_model, llama2_13B_model, guanaco_7B_model, palm_model, vicuna_7B_model, openai_model
 
 
 # Load environment variables from local ".env" file
@@ -18,20 +18,36 @@ dotenv.load_dotenv()
 prompt_factory = wse_prompts.DefaultWsePromptFactory()
 
 # Prepare the model that reads and responds to the prompt
-discussion_model_factory = testing_model.SimpleDiscussionStrategyFactory()
-# discussion_model_factory = t5_model.T5DiscussionStrategyFactory() 
-# discussion_model_factory = guanaco_7B_model.GuanacoDiscussionStrategyFactory()
-# discussion_model_factory = vicuna_7B_model.VicunaDiscussionStrategyFactory()
-# discussion_model_factory = palm_model.PalmDiscussionStrategyFactory()
-# discussion_model_factory = llama2_13B_model.Llama2_13BDiscussionStrategyFactory()
-# discussion_model_factory = llama2_7B_model.Llama2_7BDiscussionStrategyFactory()
+dm_factories = [
+  # testing_model.SimpleDiscussionStrategyFactory(),
+  # t5_model.T5DiscussionStrategyFactory(),
+  # guanaco_7B_model.GuanacoDiscussionStrategyFactory(),
+  # vicuna_7B_model.VicunaDiscussionStrategyFactory(),
+  # palm_model.PalmDiscussionStrategyFactory(),
+  # llama2_13B_model.Llama2_13BDiscussionStrategyFactory(),
+  # llama2_7B_model.Llama2_7BDiscussionStrategyFactory(),
+  # openai_model.OpenAiDiscussionStrategyFactory(model="gpt-3.5-turbo-1106"),
+  openai_model.OpenAiDiscussionStrategyFactory(model="gpt-4-0613")
+]
 
 # Prepare the database that will store the discussion results
 database = db.DatabaseSqlLite()
 
-# Create Word Sense Disambigutation Evalutions from the semcor dataset
-wse_evaluations:typing.List[wse.WordSenseEvaluation] = semcor.get_semcor_wsd_evaluations() 
+# Load the Word Sense Disambigutation Evalutions and process them
+datasets = [
+  "semcor_evaluations.json",
+  "semeval2010_evaluations.json",
+  "semeval2013_evaluations.json",
+  "semeval2015_evaluations.json",
+  "senseval2_evaluations.json",
+  "senseval3_evaluations.json"
+]
 
-print(f"The number of word sense evaluations is {len(wse_evaluations)}")
+for dataset_file_path in datasets:
+  wse_evaluations:typing.List[wse.WordSenseEvaluation] = wse.WordSenseEvaluation.Load_from_json(dataset_file_path)
 
-conduct_evaluations(wse_evaluations, prompt_factory, database, discussion_model_factory)
+  print(f"The number of word synset evaluations is {len(wse_evaluations)}")
+
+  for discussion_model_factory in dm_factories:
+    # conduct_evaluations(wse_evaluations[:100], prompt_factory, database, discussion_model_factory)
+    pass

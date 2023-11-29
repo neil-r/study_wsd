@@ -18,10 +18,21 @@ def get_semcor_wsd_evaluations():
 
       # remove extra spaces
       regular_sentence = regular_sentence.replace(" 's ", "'s ")
-      regular_sentence = regular_sentence.replace(" `` ", " `")
-      regular_sentence = regular_sentence.replace(" '' ", "' ")
+      regular_sentence = regular_sentence.replace(" `` ", " \"")
+      regular_sentence = regular_sentence.replace(" '' ", "\" ")
       regular_sentence = regular_sentence.replace(" ,", ",")
       regular_sentence = regular_sentence.replace(" .", ".")
+      regular_sentence = regular_sentence.replace(" ;", ";")
+      regular_sentence = regular_sentence.replace(" :", ":")
+      regular_sentence = regular_sentence.replace("( ", "(")
+      regular_sentence = regular_sentence.replace(" )", ")")
+      regular_sentence = regular_sentence.replace(") .", ").")
+      regular_sentence = regular_sentence.replace(" ?", "?")
+      regular_sentence = regular_sentence.replace(" !", "!")
+      regular_sentence = regular_sentence.replace(" n't", "n't")
+      regular_sentence = regular_sentence.replace(" 'm", "'m")
+      regular_sentence = regular_sentence.replace(" 're", "'re")
+      regular_sentence = regular_sentence.replace(" 'd", "'d")
 
       for t in sent:
           # print(t)
@@ -58,3 +69,9 @@ def get_semcor_wsd_evaluations():
                   regular_sentence, word, synset._name, synset_options
               ))
   return wse_evaluations
+
+if __name__ == "__main__":   
+    evaluations = get_semcor_wsd_evaluations()
+    import json
+    with open(f"semcor_evaluations.json", "w") as f:
+        f.write(json.dumps([e.to_json_complete() for e in evaluations],indent=True))
