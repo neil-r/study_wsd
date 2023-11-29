@@ -2,12 +2,23 @@ import sqlite3
 import typing
 import json
 import hashlib
+import dataclasses
 
 def convert_to_id(wse_str):
     id =  hashlib.sha256(wse_str.encode("utf-8")).hexdigest()
     return id
 
-
+@dataclasses.dataclass
+class WsdResult:
+    evalutation_id:int
+    evalution: typing.Dict
+    log: typing.List
+    discussion_duration: float
+    prompt_strategy: str
+    model_id: str
+    answer_value: str
+    answer_response: str
+    correct: bool
 
 class DatabaseSqlLite:
 
@@ -79,3 +90,17 @@ class DatabaseSqlLite:
             )).fetchone()
 
             return o is not None
+    
+    def get_wsd_evaluation(self, number):
+        offset = number - 1
+        print(offset)
+        with sqlite3.connect(self.db_file_path) as c:
+            results = c.execute(
+                "SELECT * FROM wsd_results WHERE evaluation_id IN (SELECT evaluation_id FROM wsd_results ORDER BY evaluation_id LIMIT ?, 1)", (
+                offset,
+            )).fetchmany()
+
+            if results is not None:
+                return list(WsdResult(o[0],json.loads(o[1]),json.loads(o[2]),o[3],o[4],o[5],o[6],o[7],o[8] == 1) for o in results)
+            else:
+                return None
