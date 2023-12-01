@@ -13,6 +13,8 @@ def conduct_evaluations(
   discussion_model_factory: discussion.DiscussionStrategyFactory
 ):
   for w in wse_evaluations:
+    if len(w.synset_options) <= 1:
+       continue
     try:
         prompt = prompt_factory.generate_prompt(w)
         prompt_strategy_name = prompt.__class__.__name__
