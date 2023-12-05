@@ -162,6 +162,7 @@ cython_debug/
 
 # Local working database
 data.db
+*.db
 
 WSD_Evaluation_Framework
 xl-wsd-data
