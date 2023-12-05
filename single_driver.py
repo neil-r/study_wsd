@@ -4,9 +4,9 @@ from study_wsd import wse
 
 
 eval1 = wse_prompts.WordSenseEvaluation(
-  sentence="The Fulton said Friday an investigation of Atlanta's recent primary produced 'no evidence' that any irregularities took.",
-  word="investigation",
-  pos="NOUN",
+  sentence="If you need more information about your medical condition or your treatment, read the Package Leaflet (also part of the EPAR) or contact your doctor or pharmacist.",
+  word="need",
+  pos="VERB",
   synset_answer="probe.n.01",
   synset_options=[
     wse.SynsetOption('probe.n.01', 'an inquiry into unfamiliar or questionable activities'),
