@@ -25,12 +25,12 @@ dm_factories = [
   # testing_model.SimpleDiscussionStrategyFactory(),
   # t5_model.T5DiscussionStrategyFactory(),
   # guanaco_7B_model.GuanacoDiscussionStrategyFactory(),
-  # vicuna_7B_model.VicunaDiscussionStrategyFactory(),
+  vicuna_7B_model.VicunaDiscussionStrategyFactory(),
   # palm_model.PalmDiscussionStrategyFactory(),
   # llama2_13B_model.Llama2_13BDiscussionStrategyFactory(),
   # llama2_7B_model.Llama2_7BDiscussionStrategyFactory(),
   # openai_model.OpenAiDiscussionStrategyFactory(model="gpt-3.5-turbo-1106"),
-  openai_model.OpenAiDiscussionStrategyFactory(model="gpt-4-0613")
+  # openai_model.OpenAiDiscussionStrategyFactory(model="gpt-4-0613")
 ]
 
 # Prepare the database that will store the discussion results
@@ -38,12 +38,12 @@ database = db.DatabaseSqlLite()
 
 # Load the Word Sense Disambigutation Evalutions and process them
 datasets = [
-  "semcor_evaluations.json",
-  "semeval2010_evaluations.json",
-  "semeval2013_evaluations.json",
+  # "semcor_evaluations.json",
+  # "semeval2010_evaluations.json",
+  # "semeval2013_evaluations.json",
   "semeval2015_evaluations.json",
-  "senseval2_evaluations.json",
-  "senseval3_evaluations.json"
+  # "senseval2_evaluations.json",
+  # "senseval3_evaluations.json"
 ]
 
 for dataset_file_path in datasets:
@@ -53,5 +53,5 @@ for dataset_file_path in datasets:
 
   for prompt_factory in p_factories:
     for discussion_model_factory in dm_factories:
-      # conduct_evaluations(wse_evaluations[:100], prompt_factory, database, discussion_model_factory)
+      conduct_evaluations(wse_evaluations, prompt_factory, database, discussion_model_factory)
       pass
