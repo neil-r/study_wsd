@@ -23,7 +23,7 @@ class WsdResult:
 class DatabaseSqlLite:
 
 
-    def __init__(self, db_file_path = "data.db"):
+    def __init__(self, db_file_path = "data_palm.db"):
         self.db_file_path = db_file_path
 
         with sqlite3.connect(self.db_file_path) as c:
@@ -93,7 +93,7 @@ class DatabaseSqlLite:
     
     def get_wsd_evaluation(self, number):
         offset = number - 1
-        print(offset)
+        print(f'\n***Evaluation #{offset}')
         with sqlite3.connect(self.db_file_path) as c:
             results = c.execute(
                 "SELECT * FROM wsd_results WHERE evaluation_id IN (SELECT evaluation_id FROM wsd_results ORDER BY evaluation_id LIMIT ?, 1)", (
