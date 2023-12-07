@@ -16,6 +16,15 @@ def find_letter_response(response:str) -> typing.Optional[str]:
     return l_response
 
 
+def _convert_pos_tag_to_text(pos) -> str:
+    if pos == "ADJ":
+        return "adjective"
+    if pos == "VERB":
+        return "verb"
+    if pos == "NOUN":
+        return "noun"
+    raise ValueError(f"Unknown part of speech tag conversion for pos '{pos}'")
+
 class DefaultWsePrompt(PromptFactory[WordSenseEvaluation]):
 
     def __init__(self,
@@ -199,8 +208,8 @@ class RandomWsePrompt(PromptFactory[WordSenseEvaluation]):
         
         seed_content = f"{self.topic.word}-{self.topic.pos}-{self.topic.sentence}"
         random.seed(seed_content)
-
-        random_word = ""
+        from study_wsd.datasets import wordnet
+        random_word = wordnet.create_fake_lemma(wordnet.get_random_lemma())
         new_sentence = self.topic.sentence.replace(self.topic.word, random_word, 1)
 
         options = [
@@ -215,7 +224,7 @@ class RandomWsePrompt(PromptFactory[WordSenseEvaluation]):
 
         options_str = "\n".join(options)
 
-        return f'''The word "{random_word}" has started to be used in language. What is the closet meaning of the word "{random_word}" in the following sentence?
+        return f'''The word "{random_word}" is a {_convert_pos_tag_to_text(self.topic.pos)}. Provided the following sentence, infer and select the meaning of the word "{random_word}" from the presented options.
 
 {new_sentence}
 

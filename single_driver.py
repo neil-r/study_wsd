@@ -63,11 +63,12 @@ eval4 = wse_prompts.WordSenseEvaluation(
 )
 
 evaluations = [eval1, eval2, eval3, eval4]
-pc = wse_prompts.OtherWsePrompt
+stratgies = [wse_prompts.RandomWsePrompt, wse_prompts.OtherWsePrompt]
 
-for e in evaluations:
-  prompt = pc(e)
-  print(prompt.content)
+for Strategy in stratgies:
+  for e in evaluations:
+    prompt = Strategy(e)
+    print(prompt.content)
 
 '''
 discussion_strategy = openai_model.OpenAiDiscussionStrategy("gpt-3.5-turbo-1106")
