@@ -16,8 +16,10 @@ dotenv.load_dotenv()
 
 # Prepare the creator(s) of the prompts
 p_factories = [
-  wse_prompts.DefaultWsePromptFactory(),
-  # wse_prompts.DirectWsePromptFactory(),
+  #wse_prompts.DefaultWsePromptFactory(),
+  wse_prompts.DirectWsePromptFactory(),
+  #wse_prompts.RandomWsePromptFactory(),
+  #wse_prompts.OtherWsePromptFactory(),
 ]
 
 # Prepare the model(s) that reads and responds to the prompt
@@ -38,12 +40,13 @@ database = db.DatabaseSqlLite()
 
 # Load the Word Sense Disambigutation Evalutions and process them
 datasets = [
-  "semcor_evaluations.json",
-  "semeval2010_evaluations.json",
-  "semeval2013_evaluations.json",
+  #"semcor_evaluations.json",
+  #"semeval2010_evaluations.json",
+  #"semeval2013_evaluations.json",
   "semeval2015_evaluations.json",
-  "senseval2_evaluations.json",
-  "senseval3_evaluations.json"
+  #"senseval2_evaluations.json",
+  #"senseval3_evaluations.json",
+  #"Q3evalutations.json",
 ]
 
 for dataset_file_path in datasets:
@@ -54,4 +57,4 @@ for dataset_file_path in datasets:
   for prompt_factory in p_factories:
     for discussion_model_factory in dm_factories:
       # conduct_evaluations(wse_evaluations[:100], prompt_factory, database, discussion_model_factory)
-      pass
+      conduct_evaluations(wse_evaluations, prompt_factory, database, discussion_model_factory)

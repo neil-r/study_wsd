@@ -4,7 +4,7 @@ from study_wsd import wse
 
 
 eval1 = wse_prompts.WordSenseEvaluation(
-  sentence="The Fulton said Friday an investigation of Atlanta's recent primary produced 'no evidence' that any irregularities took.",
+  sentence="The Fulton said Friday an investigation of Atlanta's recent primary produced \"no evidence\" that any irregularities took.",
   word="investigation",
   pos="NOUN",
   synset_answer="probe.n.01",
@@ -30,10 +30,50 @@ eval2 = wse_prompts.WordSenseEvaluation(
   ]
 )
 
-prompt2 = wse_prompts.DefaultWsePrompt(eval2)
+eval3 = wse_prompts.WordSenseEvaluation(
+  sentence='The jury further said in term end presentments that the City, which had over-all charge of the election, "deserves the praise and thanks of the City" for the manner in which the election was conducted.',
+  word="manner",
+  pos="NOUN",
+  synset_answer="a",
+  synset_options=[
+    wse.SynsetOption('a', 'how something is done or how it happens'),
+    wse.SynsetOption('b', 'a way of acting or behaving'),
+    wse.SynsetOption('c', 'a kind'),
+  ]
+)
 
+eval4 = wse_prompts.WordSenseEvaluation(
+  sentence='"Only a relative handful of such reports was received", the jury said, "considering the widespread interest in the election, the number of voters and the size of city".',
+  word="number",
+  pos="NOUN",
+  synset_answer="a",
+  synset_options=[
+    wse.SynsetOption('a', 'the property possessed by a sum or total or indefinite quantity of units or individuals'),
+    wse.SynsetOption('b', 'a concept of quantity involving zero and units'),
+    wse.SynsetOption('c', 'a short theatrical performance that is part of a longer program'),
+    wse.SynsetOption('d', 'the number is used in calling a particular telephone'),
+    wse.SynsetOption('e', 'a symbol used to represent a number'),
+    wse.SynsetOption('f', 'one of a series published periodically'),
+    wse.SynsetOption('g', 'a select company of people'),
+    wse.SynsetOption('g', 'a numeral or string of numerals that is used for identification'),
+    wse.SynsetOption('g', 'a clothing measurement'),
+    wse.SynsetOption('g', 'the grammatical category for the forms of nouns and pronouns and verbs that are used depending on the number of entities involved (singular or dual or plural)'),
+    wse.SynsetOption('g', 'an item of merchandise offered for sale'),
+  ]
+)
+
+evaluations = [eval1, eval2, eval3, eval4]
+pc = wse_prompts.OtherWsePrompt
+
+for e in evaluations:
+  prompt = pc(e)
+  print(prompt.content)
+
+'''
 discussion_strategy = openai_model.OpenAiDiscussionStrategy("gpt-3.5-turbo-1106")
 
 response = discussion_strategy.speak(prompt2.content)
-
 print(response)
+'''
+
+
