@@ -162,7 +162,7 @@ class OtherWsePrompt(PromptFactory[WordSenseEvaluation]):
         random.seed(seed_content)
 
         definition = ""  
-        if random.random() > 0.99:
+        if random.random() > 0.5:
             self.answer_value = "true"
 
             for t in self.topic.synset_options:
