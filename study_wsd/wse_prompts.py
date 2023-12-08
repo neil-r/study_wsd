@@ -16,6 +16,21 @@ def find_letter_response(response:str) -> typing.Optional[str]:
     return l_response
 
 
+def determine_true_false(response:str) -> typing.Optional[str]:
+    response_l = response.lower()
+    i_t = response_l.find("true")
+    i_f = response_l.find("false")
+    
+    if i_t >= 0 and i_f >=0:
+        return "true" if i_t < i_f else "false"
+    elif i_t >= 0:
+        return "true"
+    elif i_f >= 0:
+        return "false"
+    return "unknown"
+
+
+
 def _convert_pos_tag_to_text(pos) -> str:
     if pos == "ADJ":
         return "adjective"
@@ -132,7 +147,7 @@ class OtherWsePrompt(PromptFactory[WordSenseEvaluation]):
 
     def __init__(self,
                  topic:WordSenseEvaluation,
-                 response_interpretter_function=find_letter_response
+                 response_interpretter_function=determine_true_false
         ):
         self.topic = topic
         self.answer_value = None

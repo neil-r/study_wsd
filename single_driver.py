@@ -63,7 +63,10 @@ eval4 = wse_prompts.WordSenseEvaluation(
 )
 
 evaluations = [eval1, eval2, eval3, eval4]
-stratgies = [wse_prompts.RandomWsePrompt, wse_prompts.OtherWsePrompt]
+stratgies = [
+  wse_prompts.RandomWsePrompt,
+  # wse_prompts.OtherWsePrompt,
+]
 
 for Strategy in stratgies:
   for e in evaluations:
