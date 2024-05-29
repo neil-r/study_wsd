@@ -40,7 +40,7 @@ def _convert_pos_tag_to_text(pos) -> str:
         return "noun"
     raise ValueError(f"Unknown part of speech tag conversion for pos '{pos}'")
 
-class DefaultWsePrompt(PromptFactory[WordSenseEvaluation]):
+class DefaultWsePrompt(Prompt[WordSenseEvaluation]):
 
     def __init__(self,
                  topic:WordSenseEvaluation,
@@ -91,7 +91,7 @@ class DefaultWsePromptFactory(PromptFactory[WordSenseEvaluation]):
         return DefaultWsePrompt(topic)
 
 
-class DirectWsePrompt(PromptFactory[WordSenseEvaluation]):
+class DirectWsePrompt(Prompt[WordSenseEvaluation]):
 
     def __init__(self,
                  topic:WordSenseEvaluation,
@@ -143,7 +143,7 @@ class DirectWsePromptFactory(PromptFactory[WordSenseEvaluation]):
         return DirectWsePrompt(topic)
 
 
-class OtherWsePrompt(PromptFactory[WordSenseEvaluation]):
+class OtherWsePrompt(Prompt[WordSenseEvaluation]):
 
     def __init__(self,
                  topic:WordSenseEvaluation,
@@ -198,7 +198,7 @@ class OtherWsePromptFactory(PromptFactory[WordSenseEvaluation]):
         return OtherWsePrompt(topic)
 
 
-class RandomWsePrompt(PromptFactory[WordSenseEvaluation]):
+class RandomWsePrompt(Prompt[WordSenseEvaluation]):
 
     def __init__(self,
                  topic:WordSenseEvaluation,
