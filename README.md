@@ -1,88 +1,66 @@
 # Word sense disambiguation (WSD) Experiment
+The un-centralized development of language often results in ambiguities in the words used to represent things and concepts. This results in the need by readers and interpreters of language to leverage context to resolve ambiguities, i.e., word sense disambiguation (WSD). In this experiment, we evaluate the capability of LLMs to perform WSD. The experiment looks into several different aspects of WSD. Each question below forms a foundation for each aspect. To explore each question, assumptions and the setup of a sub-experiment are listed.  The experiment considers multiple LLMs that vary in size and origin. 
 
-The un-centrized development of written language often result in ambiguties in the words used to represent things and concepts. This results in the need by readers of written langauge to leverage context to resolve ambiguties, i.e., word sense disambigutation (WSD). In this experiment, we evalute the capability of LLMs to perform WSD. The experiment looks into a number of different aspects of WSD. Each question below forms a foundation for each aspect. To explore each question, assumptions and the setup of a sub-experiment is listed.  The experiment considers two or more LLMs: something like OpenAI GPT 3.5, OpenAI GPT 4.0, PALM, and LLAMA. 
+## Evaluation Datasets
 
-## Datasets
+The evaluation datasets are derived from BabelNet, WordNet, SemEval, SensEval, and SemCor. They are saved as json files in the root directory of this repository. Code was used to generate these datasets from the original data sources. Some manual cleaning was done on the generated semeval2015 dataset after executing the dataset generation code to fix some odd parsing and formatting issues. We mainly used the semeval2015 dataset for the initial execution of this experiment. The other datasets may still have a few odd parsing and formatting issues.
 
-Download and extract the datasets containing SemEval from here: https://sapienzanlp.github.io/xl-wsd/
-
-WordNet and SemCor can be downloaded by running load_data.py
-
+To recreate the datasets, download and extract the datasets containing SemEval from here: https://sapienzanlp.github.io/xl-wsd/. WordNet and SemCor can be downloaded by running load_data.py. BabelNet needs to be downloaded and installed using their instructions https://babelnet.org/downloads. The study_wsd.datasets module includes code to create evaluation datasets from SenEval, BabelNet, and SemEval datasets.
 
 ## Question 1: What is the capability of LLMs to accurately identify the sense of a word?
 
+This question investigates the ability of LLMs to identify a word's proper sense given a listing of alternative word senses and a single sentence providing context to the word's usage.
+
 ### Assumptions and Setup
 
-0. SemCor and Wordnet datasetse are used. SemCor provides annotated sentences. SemCor annotations identify the sense/definition from WordNet for each word in the sentence.
+0. A word in a sentence is annotated with its part-of-speech and the intended sense. The word's alternative senses are gathered.
+1. The sentence and all senses for the word are listed as options in a prompt and the LLM must select the correct one.
+2. LLMs process the prompt and respond with the selected sense.
+3. The selection is parsed from the LLM response and gathered in a database.
 
-1. All senses for a word are provided and the LLM must select the correct one.
-2. Different prompts are tested to evaluate "How does the prompt strategy affect LLMs performance?"
-3. Each 
-
-### Example Prompt
+### Example Prompt (see DirectWsePrompt in study_wsd.wse_prompts.py for implementation logic)
 
 
-What is the meaning of the word "investigation" in "The Fulton said Friday an investigation of Atlanta's recent primary produced 'no evidence' that any irregularities took ."?
+What is the meaning of the word "investigation" in "The Fulton said Friday an investigation of Atlanta's recent primary produced 'no evidence' that any irregularities took."?
 
 
 Options:
 1. an inquiry into unfamiliar or questionable activities
-2. the work of inquiring into something thoroughly and systematically'
+2. the work of inquiring into something thoroughly and systematically
 
 
 ## Question 2: What is the capability of LLMs to accurately identify a sense of a word that is not implied?
 
-This question investigates the ability of LLMs to internalize defintiions of words through their training and identify when a prompt fails to identify the true defintiion.
+This question investigates the ability of LLMs to internalize definitions of alternative word senses through their training and identify when a prompt fails to identify the true sense.
 
 ### Assumptions and Setup
 
-1. An "Other" option is provided in the prompt to allow the LLM to indicate none of the provided suggested senses match the true sense-usage in the sentence.
-2. Different prompts are tested to evaluate "How does the prompt strategy affect LLMs performance?"
+0. A word in a sentence is annotated with its part-of-speech and the intended sense. The word's alternative senses are gathered.
+1. A prompt is generated asking to determine if the true definition sense of a word in the given sentence is provided.
+2. LLMs process the prompt and respond with true or false.
+3. The selection is parsed from the LLM response and gathered in a database.
 
-### Example Prompt
+### Example Prompt (see OtherWsePrompt in study_wsd.wse_prompts.py for implementation logic)
 
-What is the meaning of the word "investigation" in "The Fulton said Friday an investigation of Atlanta's recent primary produced 'no evidence' that any irregularities took ."?
+True or false, does the word "investigation" in the following sentence mean "the work of inquiring into something thoroughly and systematically'"?
+
+The Fulton said Friday an investigation of Atlanta's recent primary produced 'no evidence' that any irregularities took.
+
+## Question 3: What is the capability of LLMs to accurately identify the sense of a new word from one-shot learning prompt that provides an example of the word in a sentence?
+
+### Assumptions and Setup
+
+0. A word in a sentence is annotated with its part-of-speech and the intended sense. The word's alternative senses are gathered.
+1. A new made-up word is generated and replaces the original word in the given sentence.
+2. The revised sentence and all senses for the word are listed as options in a prompt and the LLM must select the correct one.
+3. LLMs process the prompt and respond with the selected sense.
+4. The selection is parsed from the LLM response and gathered in a database.
+
+### Example Prompt (see RandomWsePrompt in study_wsd.wse_prompts.py for implementation logic)
+
+What is the meaning of the word "inbestication" in "The Fulton said Friday an inbestication of Atlanta's recent primary produced 'no evidence' that any irregularities took."?
 
 
 Options:
-1. the work of inquiring into something thoroughly and systematically'
-2. Other
-
-
-## Question 3: What is the capability of LLMs to accurately describe a definition of a new word from one-shot learning prompt that provides an example of the word in a paragraph?
-
-### Assumptions and Setup
-
-0. Verbs and nouns are created. 
-1. New made-up words are generated to represent an advanced concept. Attributes of the advanced concept are identified. A passge of text uses the word with carefully constructured text that provides hints to the attributes of the advanced concept.
-2. LLMs are asked to create a definition of the made-up word.
-3. The responses from each LLM are ranked (or scored?) according to the number of attributes it captured in the defintion.
-
-### Example Prompt
-
-
-
-## Question 4: What is the capability of LLMs to identify words within a passage of text that uses two different senses?
-
-### Assumptions and Setup
-
-0. Verbs and nouns are created. 
-1. New made-up words are generated to represent an advanced concept. Attributes of the advanced concept are identified. A passge of text uses the word with carefully constructured text that provides hints to the attributes of the advanced concept.
-2. LLMs are asked to create a definition of the made-up word.
-3. The responses from each LLM are ranked (or scored?) according to the number of attributes it captured in the defintion.
-
-### Example Prompt
-
-
-
-## Question 5: How can the OpenAI API be used to support WSD?
-
-
-
-### Assumptions and Setup
-
-0. Create a function to lookup wordnet senses.
-1. Create a prompt strategy to take a sentence and the function to generate a prompt and handle responses to run function.
-2. 
-
-### Example Prompt
+1. an inquiry into unfamiliar or questionable activities
+2. the work of inquiring into something thoroughly and systematically
