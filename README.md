@@ -1,5 +1,5 @@
 # Word sense disambiguation (WSD) Experiment
-The un-centralized development of language often results in ambiguities in the words used to represent things and concepts. This results in the need by readers and interpreters of language to leverage context to resolve ambiguities, i.e., word sense disambiguation (WSD). In this experiment, we evaluate the capability of LLMs to perform WSD. The experiment looks into several different aspects of WSD. Each question below forms a foundation for each aspect. To explore each question, assumptions and the setup of a sub-experiment are listed.  The experiment considers multiple LLMs that vary in size and origin. 
+The un-centralized development of language often results in ambiguities in the words used to represent things and concepts. This results in the need by readers and interpreters of language to leverage context to resolve ambiguities, i.e., word sense disambiguation (WSD). In this experiment, we evaluate the capability of LLMs to perform WSD. The experiment looks into several different aspects of WSD. Each prompt below forms a foundation for each aspect. To explore each question, assumptions and the setup of a sub-experiment are listed.  The experiment considers multiple LLMs that vary in size and origin. 
 
 ## Evaluation Datasets
 
@@ -52,7 +52,7 @@ The Fulton said Friday an investigation of Atlanta's recent primary produced 'no
 
 0. A word in a sentence is annotated with its part-of-speech and the intended sense. The word's alternative senses are gathered.
 1. A new made-up word is generated and replaces the original word in the given sentence.
-2. The revised sentence and all senses for the word are listed as options in a prompt and the LLM must select the correct one.
+2. The revised sentence and all senses for the original word are listed as options in a prompt and the LLM must select the correct one.
 3. LLMs process the prompt and respond with the selected sense.
 4. The selection is parsed from the LLM response and gathered in a database.
 
@@ -64,3 +64,20 @@ What is the meaning of the word "inbestication" in "The Fulton said Friday an in
 Options:
 1. an inquiry into unfamiliar or questionable activities
 2. the work of inquiring into something thoroughly and systematically
+
+# Citation
+
+To read more about this study or to cite the use of this code or data:
+
+```biblatex
+@article{yae_leveraging_2024,
+	title = {Leveraging large language models for word sense disambiguation},
+	issn = {1433-3058},
+	url = {https://doi.org/10.1007/s00521-024-10747-5},
+	doi = {10.1007/s00521-024-10747-5},
+	journaltitle = {Neural Computing and Applications},
+	shortjournal = {Neural Computing and Applications},
+	author = {Yae, Jung H. and Skelly, Nolan C. and Ranly, Neil C. and {LaCasse}, Phillip M.},
+	date = {2024-12-19},
+}
+
