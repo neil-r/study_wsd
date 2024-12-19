@@ -1,6 +1,10 @@
 # Word sense disambiguation (WSD) Experiment
 The un-centralized development of language often results in ambiguities in the words used to represent things and concepts. This results in the need by readers and interpreters of language to leverage context to resolve ambiguities, i.e., word sense disambiguation (WSD). In this experiment, we evaluate the capability of LLMs to perform WSD. The experiment looks into several different aspects of WSD. Each prompt below forms a foundation for each aspect. To explore each question, assumptions and the setup of a sub-experiment are listed.  The experiment considers multiple LLMs that vary in size and origin. 
 
+## Application
+
+To see an application of LLM WSD as part of an information extraction pipeline, see the [Content Sentiment Analyzer](https://github.com/neil-r/content_sentiment_analyzer).
+
 ## Evaluation Datasets
 
 The evaluation datasets are derived from BabelNet, WordNet, SemEval, SensEval, and SemCor. They are saved as json files in the root directory of this repository. Code was used to generate these datasets from the original data sources. Some manual cleaning was done on the generated semeval2015 dataset after executing the dataset generation code to fix some odd parsing and formatting issues. We mainly used the semeval2015 dataset for the initial execution of this experiment. The other datasets may still have a few odd parsing and formatting issues.
